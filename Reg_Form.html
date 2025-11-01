@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BLOOM COLLEGE - Student Registration Form</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    body {
+      background-color: #f9f9f9;
+      padding: 30px;
+    }
+    .container {
+      background: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      max-width: 700px;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      font-weight: bold;
+    }
+    /* Upload box hover effect */
+    #uploadBox:hover #hoverText {
+      opacity: 1;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h2>BLOOM COLLEGE<br><small>Student Registration Form</small></h2>
+
+    <form id="registerForm">
+      <!-- Upload Image (Top Left Alone) -->
+      <div class="mb-4 text-start">
+        <label class="form-label d-block">Student Image:</label>
+        <div id="uploadBox"
+            style="width:150px; height:150px; border:2px dashed #ccc; border-radius:10px;
+                   position:relative; overflow:hidden; cursor:pointer; background:#f9f9f9;"
+            onclick="document.getElementById('fileInput').click()">
+          <img id="previewImage" src="https://via.placeholder.com/150?text=No+Image"
+               alt="Preview"
+               style="width:100%; height:100%; object-fit:cover;">
+          <div id="hoverText"
+               style="position:absolute; top:0; left:0; width:100%; height:100%;
+                      display:flex; align-items:center; justify-content:center;
+                      background:rgba(0,0,0,0.5); color:white; font-weight:bold;
+                      opacity:0; transition:opacity 0.3s;">
+            Upload Image
+          </div>
+        </div>
+        <input type="file" id="fileInput" accept="image/*"
+               style="display:none;" onchange="previewFile(event)">
+        <small class="text-muted">(less than 5 MB)</small>
+      </div>
+
+      <!-- Student Info (All vertically below the image) -->
+      <div class="mb-3">
+        <label>Student Name:</label>
+        <input type="text" class="form-control" id="studentName" onchange="toUpperCaseText(this)" onblur="fieldBlur(event)">
+      </div>
+
+      <div class="mb-3">
+        <label>Father's Name:</label>
+        <input type="text" class="form-control" id="fatherName" onchange="toUpperCaseText(this)" onblur="fieldBlur(event)">
+      </div>
+
+      <div class="mb-3">
+        <label>Mother's Name:</label>
+        <input type="text" class="form-control" id="motherName" onchange="toUpperCaseText(this)" onblur="fieldBlur(event)">
+      </div>
+
+      <div class="mb-3">
+        <label>Gender:</label><br>
+        <input type="radio" name="gender" value="Male"> Male
+        <input type="radio" name="gender" value="Female"> Female
+      </div>
+
+      <div class="mb-3">
+        <label>Date of Birth:</label>
+        <input type="date" class="form-control" onblur="fieldBlur(event)">
+      </div>
+
+      <div class="mb-3">
+        <label>Email:</label>
+        <input type="email" class="form-control" id="email" onfocus="highlightEmail(this)" onblur="fieldBlur(event)">
+      </div>
+
+      <div class="mb-3">
+        <label>Level:</label>
+        <select class="form-select">
+          <option>Diploma</option>
+          <option>Degree</option>
+          <option>Master</option>
+          <option>PhD</option>
+        </select>
+      </div>
+
+      <div class="mb-3">
+        <label>Department:</label>
+        <select class="form-select">
+          <option>Computer Engineering</option>
+          <option>Information Technology</option>
+          <option>Software Engineering</option>
+        </select>
+      </div>
+
+      <div class="mb-3">
+        <label>Tel/Mobile:</label>
+        <input type="text" class="form-control" onblur="fieldBlur(event)">
+      </div>
+
+      <h5>Address</h5>
+      <div class="mb-3">
+        <label>State:</label>
+        <input type="text" class="form-control" onblur="fieldBlur(event)">
+      </div>
+      <div class="mb-3">
+        <label>City:</label>
+        <input type="text" class="form-control" onblur="fieldBlur(event)">
+      </div>
+      <div class="mb-3">
+        <label>Postcode:</label>
+        <input type="text" class="form-control" onblur="fieldBlur(event)">
+      </div>
+
+      <!-- Buttons -->
+      <div class="d-flex justify-content-center gap-3">
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#successModal">Register</button>
+        <button type="reset" class="btn btn-secondary">Reset</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Bootstrap Modal -->
+  <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header bg-success text-white">
+          <h5 class="modal-title" id="exampleModalLabel">Success</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body text-center">
+          ✅ Your details have been saved!
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS and JS Events -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // (i) onBlur event
+    function fieldBlur(event) {
+      if (event.target.value === "") {
+        alert("You left this field empty!");
+      }
+    }
+
+    // (ii) onFocus event for email
+    function highlightEmail(input) {
+      input.style.backgroundColor = "#e6f7ff";
+    }
+
+    // (iii) onChange event - convert to uppercase
+    function toUpperCaseText(input) {
+      input.value = input.value.toUpperCase();
+    }
+
+    // Preview uploaded image
+    function previewFile(event) {
+      const reader = new FileReader();
+      reader.onload = function() {
+        document.getElementById('previewImage').src = reader.result;
+      };
+      reader.readAsDataURL(event.target.files[0]);
+    }
+  </script>
+</body>
+</html>
